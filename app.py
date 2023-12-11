@@ -47,12 +47,12 @@ class App:
         self.screen = pygame.display.set_mode((self.WIDTH, self.HEIGHT))
         self.movement = pygame.math.Vector2()
         self.key_state = {pygame.K_w: False, pygame.K_s: False, pygame.K_a: False, pygame.K_d: False, pygame.K_1: False, pygame.K_2: False}
-        self.size_factor = 200
+        self.size_factor = 300
         self.only_primes = False
 
         self.create_polar_system()
 
-    def create_polar_system(self, amount=100000):
+    def create_polar_system(self, amount=200000):
         primes = get_primes(1, amount)
         self.polar_system = {}
         for i in range(amount + 1):
