@@ -19,6 +19,12 @@ def is_prime(num):
     return True
 
 
+def is_divede(num, factor):
+    if num % factor == 0:
+        return True
+    return False
+
+
 class App:
     def __init__(self):
         pygame.init()
@@ -33,6 +39,7 @@ class App:
             row = []
             for x in range(self.WIDTH // 4):
                 prime = is_prime(y * self.WIDTH + x)
+                # prime = is_divede(y * self.WIDTH + x, 17)
                 row.append([(x, y), prime])
             self.arr.append(row)
 
