@@ -31,18 +31,18 @@ class App:
     def draw(self):
         self.screen.fill((0, 0, 0))
 
-        dict_ = {}
-        for y in range(int(HEIGHT / self.zoom)):
+        arr = []
+        for y in range(int(self.movement.y), int(HEIGHT / self.zoom + self.movement.y)):
             for x in range(int(WIDTH / self.zoom)):
-                if is_prime(y * WIDTH + x):
-                    dict_[(x, y)] = True
-
-        for pos in dict_:
-            # pygame.draw.rect(screen, [red, blue, green], [left, top, width, height], filled)
-            y = pos[1] + self.movement.y
-            x = pos[0] + self.movement.x
-            pygame.draw.rect(self.screen, (255, 255, 255), [x * self.zoom, y * self.zoom, self.zoom, self.zoom])
-        self.counter += 0.01
+                real_x = x + int(self.movement.x)
+                real_y = y + int(self.movement.y)
+                num = real_y * WIDTH + real_x
+                if is_prime(num):
+                    pygame.draw.rect(self.screen, (255, 255, 255), (x * self.zoom, y * self.zoom, self.zoom, self.zoom))
+                # if is_prime(y * WIDTH + x):
+                #     yy = y - self.movement.y
+                #     xx = x + self.movement.x
+                #     pygame.draw.rect(self.screen, (255, 255, 255), [xx * self.zoom, yy * self.zoom, self.zoom, self.zoom])
 
         self.screen.blit(self.font.render(f"{self.movement}", True, (0, 255, 255)), (20, 20))
 
@@ -52,17 +52,18 @@ class App:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     run = False
-                elif event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_ESCAPE:
-                        run = False
-                    if event.key == pygame.K_RIGHT:
-                        self.movement.x += 1
-                    if event.key == pygame.K_LEFT:
-                        self.movement.x -= 1
-                    if event.key == pygame.K_UP:
-                        self.movement.y -= 1
-                    if event.key == pygame.K_DOWN:
-                        self.movement.y += 1
+
+            keys = pygame.key.get_pressed()
+            if keys[pygame.K_ESCAPE]:
+                run = False
+            if keys[pygame.K_RIGHT]:
+                self.movement.x += 1
+            if keys[pygame.K_LEFT]:
+                self.movement.x -= 1
+            if keys[pygame.K_UP]:
+                self.movement.y -= 1
+            if keys[pygame.K_DOWN]:
+                self.movement.y += 1
 
             self.draw()
             pygame.display.flip()
